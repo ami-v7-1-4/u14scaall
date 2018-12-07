@@ -1,0 +1,34 @@
+language: scala
+
+runtime:
+  nodePool: dynamic__x86_64__Ubuntu_14_04__c4_large
+  
+scala:
+  - 2.11.12 
+  - 2.12.7
+
+jdk:
+  - openjdk7
+  - openjdk8
+  - openjdk10
+  - openjdk11
+  - oraclejdk8
+  - oraclejdk11
+    
+build:
+  pre_ci_boot:
+    image_name: drydock/u14scaall
+    image_tag: master
+    pull: true
+    
+  ci:
+    - java -version
+    - echo $SHIPPABLE_SCALA_VERSION
+    - docker pull shippabledocker/sample_node_pvt:ecr
+    
+integrations:
+    
+  hub:
+ #Docker integration
+    - integrationName: ship-docker
+      type: dockerRegistryLogin
